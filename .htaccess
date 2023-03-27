@@ -1,0 +1,13 @@
+RewriteEngine on
+
+# Redirect Trailing Slashes If Not A Folder...
+# RewriteCond %{REQUEST_FILENAME} !-d
+# RewriteCond %{REQUEST_URI} (.+)/$
+# RewriteRule ^ %1 [L,R=301]
+RewriteCond %{SERVER_PORT} 80
+RewriteCond %{HTTP_HOST} ^(www\.)?iwekart.earbor.com\.com
+RewriteRule ^(.*)$ https://iwekart.earbor.com/$1 [R,L]
+
+RewriteCond %{REQUEST_URI} !^public
+
+RewriteRule ^(.*)$ public/$1 [L]

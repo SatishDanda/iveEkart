@@ -1,0 +1,2 @@
+<?php echo $__env->make(Theme::getThemeNamespace('views.ecommerce.products'), \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<?php /**PATH D:\Projects\xampp8\htdocs\iveEkart\platform/themes/martfury/views/ecommerce/product-category.blade.php ENDPATH**/ ?>

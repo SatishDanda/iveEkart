@@ -1,0 +1,61 @@
+07-02-2023
+------------
+Razorpay integration ( done In live )
+
+10-02-2023
+------------------
+1) Remove The Bank Transfer Option on payments ( done  In live)
+2) Adding Address time show the state and city. ( done  In live)
+3) Required Fields on Checkout page. ( done   )
+4) Check Out Page after Payment 30sec time to disable. ( done  )
+
+
+13-02-2023
+------------
+1 ) Country by default india followed by states. ( done ) 
+	1.1)   Add New Address Pages in checkout page  ( done )
+	1.2)   Add New Address on Customer Login page  ( done )
+2 ) States Dropdown alphabetical ( done )
+3 ) No Shiping is mandartory . ( done )
+4 ) custom shiping rules ( 0rs to 100rs ) . ( done )
+5 ) some products need to date availablity. Show the (Mon to Sat) (9apm to 5pm)  ( almost completed )
+	5.1 ) Create Time Add TImeslotes. ( done )
+	5.2 ) Edit time Add Time Slotes. ( done )
+	5.3 ) delete the time if product delete. ( done )
+	5.4 ) show the customer if product added of time slotes. ( done )
+	5.5 ) if order created show the date time for product admin.
+	5.6 ) Invoice time or Email time need to add this field.
+ 
+20-02-2023
+-----------
+1) Plugin Create and Override file the after updateing a adminsitration. ( done ) 
+	1.1) instead of compare write single line on plugin files 
+
+27-02-2023
+--------------
+1) Replace the old product with exsting prouduct service only ( done )
+2) remove space between shiping cart.
+3) Product have any services but slots are same.( done )
+
+Issues ( 27-02-2023 )
+-----------------------
+1) Cleaning Services has 4 Products.. For this that Delivery slot are not working properly ( done )
+2) Check out page dispaly time slots problem. ( done )
+3) Check out time multiple products added, time slots selecting problems ( done )
+4) Replace the Exsiting Product Indival Product Check Out ( done )
+5) Future Dates Will Enable on Date Slots. ( done )
+
+
+March
+(15-03-2023)
+-------------
+Pushed Above Change to Live. ( done )
+
+
+(16-03-2023)
+---------------
+
+1) Can you add "Other" or "Not in List" Option.... if they select that then they get free from text?
+2) Can you please have these dates sorted by asc (  done )
+3) zip code auto complete May be the tag is wrong.. it is expecting login (done )
+4) after submisstion cart order, and disable the submit button

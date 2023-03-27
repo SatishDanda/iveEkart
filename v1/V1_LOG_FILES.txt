@@ -1,0 +1,141 @@
+ 
+------------------------------------------------------------------------------
+-------------------------------------VERSION 1 START-------------------------
+------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+----- For Dropdown  By Default India and states & Checkout page Validation ----- 
+--------------------------------------------------------------------------------
+
+				**********************
+				**** ADDED FILES ****
+				********************** 
+.../public\custom\js\checkoutvalidation.js
+.../public\custom\js\validationplugin.js
+ 
+
+				**********************
+				****MODIFIED FILES****
+				**********************
+
+.../platform\plugins\ecommerce\resources\views\orders\checkout.blade.php
+	<!-- V1::eArbor Add two scripts for validation check L:300 -->
+		    <script src="{{ asset('custom/js/validationplugin.js') }}"></script>
+    		<script src="{{ asset('custom/js/checkoutvalidation.js') }}"></script>
+    		
+.../platform\plugins\ecommerce\src\Supports\EcommerceHelper.php
+		
+		/* V1::eArbor to select india by defult getAvailableStatesByCountry method L:215 */
+
+		if ($this->isUsingInMultipleCountries()) {
+            $condition['country_id'] = 35;
+        }
+
+.../platform\themes\martfury\views\ecommerce\customers\address\create.blade.php
+	<!-- V1::eArbor add this line to Select Country dropdown option  L:30 -->
+		@if (35 == $countryCode) selected @endif
+
+	<!-- V1::eArbor add this line to Select State L:47 -->
+	!EcommerceHelper::isUsingInMultipleCountries() || 35
+
+...\platform\plugins\ecommerce\resources\views\orders\partials\address-form.blade.php
+	<!-- V1::eArbor add this line to select country dropdown option L:89 -->
+		@if (35 == $countryCode)  selected @endif
+
+	<!-- V1::eArbor add this line to Select State L:111 -->
+	!EcommerceHelper::isUsingInMultipleCountries() || 35
+
+	<!-- V1::eArbor add to disable auto complete L:158 -->
+       readonly onfocus="this.removeAttribute('readonly');" 
+----------------------------------------------------
+---- For Delivery Realated Added , Modified Files --
+----------------------------------------------------
+				**********************
+				**** ADDED FILES ****
+				********************** 
+...\app\Http\Controllers\SharedController.php
+...\app\Models\Deliverydays.php
+...\app\Models\ProductTimeSlots.php
+...\app\Models\OrderDaySlot.php
+...\resources\views\custom\product\product-servicedatetime-form.blade.php
+...\resources\views\custom\product\delivery-slot.blade.php
+...\resources\views\custom\product\delivery-slot-checkbox.blade.php
+
+				**********************
+				****MODIFIED FILES****
+				**********************
+
+...\platform\plugins\ecommerce\src\Models\Product.php 
+
+        /* V1::eArbor add relationship to product and time slots L:26;228*/
+			use App\Models\ProductTimeSlots;
+
+			public function timeslots(): HasMany
+		    {
+		        return $this->hasMany(ProductTimeSlots::class, 'product_id');
+		    }
+
+
+...\platform\plugins\ecommerce\src\Http\Controllers\ProductController.php 
+
+		/* V1::eArbor Store Time Add  this line Before return line L:132*/ 
+			app('App\Http\Controllers\SharedController')->storeProductTimeSlots( $request , $product,  0 );
+		
+		/* V1::eArbor Store Time Add  this line Before return line L:215*/ 
+			app('App\Http\Controllers\SharedController')->storeProductTimeSlots( $request , $product,  1 );
+
+...\platform\plugins\ecommerce\src\Forms\ProductForm.php
+	
+	use App\Models\Deliverydays; 
+
+	/* V1::eArbor Get Delivery Days. L:62 */
+	$servicedatetime = Deliverydays::pluck('delivery_day' , 'id');
+    $productDays = [];
+
+	/* V1::eArbor On Update time display the data. L:84*/
+    $collection  = collect($this->getModel()->timeslots);
+    $productDays = $collection ->keyBy('delivery_day')->all(); 
+
+    /* V1::eArbor add this view below the product_options_box view.  L:234*/
+    ->addMetaBoxes([
+        'servicedatetime' => [
+            'title' => 'Product Service Date Time',
+            'content' => view('custom.product.product-servicedatetime-form', [
+                'days' => $servicedatetime,
+                'product_days' => $productId ? $productDays   : [],  
+            ]),
+            'priority' => 5,
+        ],
+    ]);
+
+ ...\platform\plugins\ecommerce\src\Cart\Cart.php
+ 
+	/* V1::eArbor  all products in Cart,  products() add 'timeslots' relation ship L:669 */
+	add this relationship  'timeslots' on with.
+
+ ...\plugins\ecommerce\resources\views\orders\checkout\product.blade.php
+
+ 	<!-- V1::eArbor page Added For Devlivery Slots -->
+ 	@include('custom/product/delivery-slot') 
+
+...\platform\plugins\ecommerce\resources\views\orders\checkout.blade.php
+
+//  To Store Order Slots processPostCheckoutOrder()
+...\platform\plugins\marketplace\src\Providers\OrderSupportServiceProvider.php
+
+  // eArbor storeOrderTimeSlots
+   app('App\Http\Controllers\SharedController')->storeOrderTimeSlots(   $request  );
+
+// For Removing Exsting Attribure From Cart.
+...\platform\plugins\ecommerce\src\Http\Controllers\Fronts\PublicCartController.php
+	
+ // eArbor Remove Cart Already Exsting Prouduct.
+  app('App\Http\Controllers\SharedController')->removeCartAttributeProduct(   $request->input('id') );
+
+
+
+
+
+------------------------------------------------------------------------------
+-------------------------------------VERSION 1 END ---------------------------
+------------------------------------------------------------------------------

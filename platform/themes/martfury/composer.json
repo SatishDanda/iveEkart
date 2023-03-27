@@ -1,0 +1,8 @@
+{
+    "name": "theme/martfury",
+    "description": "MartFury - Multivendor / Marketplace Laravel eCommerce System",
+    "type": "package",
+    "require": {
+        "riverskies/laravel-mobile-detect": "^1.3"
+    }
+}
